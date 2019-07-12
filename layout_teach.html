@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>前端知识点</title>
+</head>
+<style>
+  div[class^="parent"] {
+    width: 150px;
+    height: 150px;
+    background-color: #efefef;
+    border: 1px solid #00000044;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    box-shadow: 1px 1px 2px 1px #00000088;
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+
+  div[class^="son"] {
+    width: 50px;
+    height: 50px;
+    background-color: #13dcf8;
+  }
+
+  div[class*="case"] {
+    font-weight: 700;
+    color: #6f7180;
+    flex: 1;
+    line-height: 24px;
+  }
+
+  .case1 > i {
+    color: #000c17;
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .son1 {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+
+  .son2 {
+    position: absolute; /*width: 宽度;*/
+    left: 50%;
+    margin-left: -25px
+  }
+
+  /*负margin*/
+  .son3 {
+    position: absolute;
+    width: 宽度;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+
+  .son4 {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+
+  .son5 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .parent1 {
+    position: relative;
+  }
+
+  .flex {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+
+  .parent2 {
+    text-align: center;
+    line-height: 200px;
+  }
+
+  .son6 {
+    display: inline-block;
+    vertical-align: middle
+  }
+
+  .content {
+    text-align: left
+  }
+
+  .content > div {
+    padding:30px 40px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: 1px solid #00000044;
+    box-shadow: 1px 1px 2px 1px #00000088;
+    min-height: 500px;
+  }
+
+  i {
+    font-style: normal;
+  }
+
+  #app {
+    width: 1200px;
+    margin: 0 auto;
+  }
+</style>
+<body>
+<div id="app">
+  <div class="flex">
+    <div class="parent1">
+      <div class="son1"></div>
+    </div>
+    <div class="parent1">
+      <div class="son2"></div>
+    </div>
+    <div class="parent1">
+      <div class="son3"></div>
+    </div>
+    <div class="parent1">
+      <div class="son4"></div>
+    </div>
+    <div class="parent1">
+      <div class="son5"></div>
+    </div>
+    <div class="parent1">
+      <div class="son5"></div>
+    </div>
+    <div class="parent2">
+      <div class="son6"></div>
+    </div>
+  </div>
+  <div class="content">
+    <p style="font-weight: 700;font-size: 20px;">资料</p>
+    <a href="https://wangbin3162.github.io/bin-ui-doc" target="view_window" style="margin-right: 20px">BIN-UI</a>
+    <a href="https://wangbin3162.github.io/html/" target="view_window">前端技术文档</a>
+    <p style="font-weight: 700;font-size: 20px;text-align: center">CSS知识点</p>
+    <p style="font-weight: 700;font-size: 18px;color: #696969;text-align: center">
+      <span @click="tab=0" :style="tab===0?'color:red;':''">position定位</span>
+      <span @click="tab=1" :style="tab===1?'color:red;':''" style="margin: 0 30px;">定位与居中</span>
+      <span @click="tab=2" :style="tab===2?'color:red;':''">Flex伸缩盒模型</span>
+    </p>
+    <div>
+      <div v-show="tab===0" style="font-size: 16px;line-height: 30px;">
+        `static` <br>是默认值<br>
+        `relative` <br>相对定位 相对于自身原有位置进行偏移，仍处于标准文档流中<br>
+        `absolute` <br>绝对定位 相对于最近的已定位的祖先元素, 有已定位(指`position`不是`static`的元素)祖先元素, 以最近的祖先元素为参考标准。如果无已定位祖先元素,
+        以`body`元素为偏移参照基准, 完全脱离了标准文档流。<br>
+        `fixed` <br>固定定位的元素会相对于视窗来定位,这意味着即便页面滚动，它还是会停留在相同的位置。一个固定定位元素不会保留它原本在页面应有的空
+        <i style="color: #cf1322">问题：使用脱离文档流定位会出现父标签高度塌陷,需为父级标签元素添加高宽</i>
+      </div>
+      <div v-show="tab===1" style="font-size: 16px;line-height: 30px;">
+        <div class="case1">
+          <i style="font-weight: 700">方案1</i><br>
+          position+transform居中（或负margin）<br>
+          .son { position: absolute; left: 50%; transform: translate(-50%, 0); }<br>
+          .son { position: absolute; width: 宽度; left: 50%; margin-left: -0.5*宽度 }<br>
+          .son { position: absolute; width: 宽度; left: 0; right: 0; margin: 0 auto; }<br>
+          .son { position: absolute; top: 50%; transform: translate( 0, -50%);}<br>
+        </div>
+        <div class="case1">
+          <i style="font-weight: 700">方案2</i><br>
+          text-align+line-height<br>
+          .parent { height: 高度; } <br>.son { line-height: 高度; }
+        </div>
+        <div class="case1">
+          <i style="font-weight: 700">方案3</i><br>
+          width+margin<br>
+          .center-block { margin: 0 auto; }
+        </div>
+        <div class="case1">
+          <i style="font-weight: 700">方案4</i><br>
+          flex--早期display：box<br>
+          .parent { display: flex; align-items: center; }
+        </div>
+        <div class="case1">
+          <i style="font-weight: 700">方案5</i><br>
+          table居中<br>
+          .parent { display: table; } <br>.son { display: table-cell; vertical-align: middle; }
+        </div>
+      </div>
+      <div v-show="tab===2" style="font-size: 16px;line-height: 30px;">
+        这一css布局能够实现良好的适应性弹性布局，并且css配置项完善。
+        <a href="https://wangbin3162.github.io/html/flex.html#%E4%B8%80%E3%80%81flex-%E5%B8%83%E5%B1%80%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F
+">Flex详细说明</a>
+        <ul>
+          <li>
+            flex-direction（常用）：设置横向排列或纵向
+          </li>
+          <li>
+            flex-wrap（常用）：设置换行
+          </li>
+          <li>
+            justify-content（常用）：设置间隔形式及对其方式
+          </li>
+          <li>
+            align-items（常用）：设置排列顺序
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+<script>
+  new Vue({
+    el: "#app",
+    data: function () {
+      return {
+        tab: 0
+      }
+    }
+  })
+</script>
+</body>
+</html>
